@@ -1,7 +1,8 @@
+/* eslint-disable camelcase */
 import "./globals.css";
-import { Nunito } from "next/font/google";
+import { Nunito_Sans } from "next/font/google";
 
-const nunito = Nunito({ subsets: ["latin"] });
+const nunito = Nunito_Sans({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Book Wise",
@@ -14,7 +15,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html className="text-gray-100 bg-gray-800" lang="en">
       <body className={nunito.className}>{children}</body>
     </html>
   );
