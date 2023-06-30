@@ -1,8 +1,11 @@
+"use client";
+
 import React from "react";
 import { FcGoogle } from "react-icons/fc";
 import { GoRocket } from "react-icons/go";
 import { GrGithub } from "react-icons/gr";
 
+import { signIn } from "next-auth/react";
 import Image from "next/image";
 
 import WebLoginBgImageMobile from "../../assets/web-login-bg-image-mobile.jpg";
@@ -38,6 +41,7 @@ const LoginPage = () => {
           <button
             className="flex items-center gap-5 w-96 text-gray-200 font-bold leading-[160%] bg-gray-600 py-5 px-6 rounded text-lg hover:bg-gray-500"
             type="button"
+            onClick={() => signIn("google")}
           >
             <FcGoogle size={32} /> Entrar com Google
           </button>
