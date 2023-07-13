@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable global-require */
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -60,6 +62,10 @@ module.exports = {
         100: "#50B2C0",
         200: "#255D6A",
         300: "#0A313C",
+      },
+
+      red: {
+        100: "#F75A68",
       },
 
       purple: {
