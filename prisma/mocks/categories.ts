@@ -1,6 +1,12 @@
 import { randomUUID } from "crypto";
 
-import { Book, CategoriesOnBooks, Category, User } from "@prisma/client";
+import {
+  Book,
+  CategoriesOnBooks,
+  Category,
+  Rating,
+  User,
+} from "@prisma/client";
 
 export const users: User[] = [
   {
@@ -111,5 +117,25 @@ export const categoriesWithBooks: CategoriesOnBooks[] = [
   {
     book_id: books.filter((b) => b.name === "The Great Gatsby")[0].id,
     categoryId: categories.filter((c) => c.name === "Fiction")[0].id,
+  },
+];
+
+export const ratings: Rating[] = [
+  {
+    id: randomUUID(),
+    rate: 4,
+    description:
+      "Very good book, the beginning of the book is very nice, in the middle is a litte dragged, but after it gets better",
+    created_at: new Date(),
+    book_id: books.filter((b) => b.name === "Da Vinci Code")[0].id,
+    user_id: users.filter((u) => u.name === "Geralt de rivia")[0].id,
+  },
+  {
+    id: randomUUID(),
+    rate: 2,
+    description: "I didn't like this book, and i did not finished it",
+    created_at: new Date(),
+    book_id: books.filter((b) => b.name === "Da Vinci Code")[0].id,
+    user_id: users.filter((u) => u.name === "Yennefer")[0].id,
   },
 ];

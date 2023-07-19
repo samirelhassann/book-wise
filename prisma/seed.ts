@@ -1,6 +1,12 @@
 import { PrismaClient } from "@prisma/client";
 
-import { books, categories, users } from "./mocks/categories";
+import {
+  books,
+  categories,
+  categoriesWithBooks,
+  ratings,
+  users,
+} from "./mocks/categories";
 
 const prisma = new PrismaClient();
 
@@ -44,27 +50,33 @@ async function main() {
     });
   });
 
-  //   const ratingsSeed = ratings.map((rating) => {
-  //     return prisma.rating.create({
-  //       data: {
-  //         id: rating.id,
-  //         rate: rating.rate,
-  //         description: rating.description,
-  //         user: {
-  //           connect: { id: rating.user_id },
-  //         },
-  //         book: {
-  //           connect: { id: rating.book_id },
-  //         },
-  //       },
-  //     });
-  //   });
+  const categoriesOnBooksSeed = categoriesWithBooks.map((categoryOnBook) => {
+    return prisma.categoriesOnBooks.create({
+      data: {
+        book_id: categoryOnBook.book_id,
+        categoryId: categoryOnBook.categoryId,
+      },
+    });
+  });
+
+  const ratingsSeed = ratings.map((rating) => {
+    return prisma.rating.create({
+      data: {
+        id: rating.id,
+        rate: rating.rate,
+        description: rating.description,
+        user_id: rating.user_id,
+        book_id: rating.book_id,
+      },
+    });
+  });
 
   await prisma.$transaction([
     ...categoriesSeed,
     ...booksSeed,
+    ...categoriesOnBooksSeed,
     ...usersSeed,
-    // ...ratingsSeed,
+    ...ratingsSeed,
   ]);
 }
 
