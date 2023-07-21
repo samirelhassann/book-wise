@@ -10,6 +10,7 @@ interface DetailedCardProps {
   bookCoverImage: string;
   authorName: string;
   rating: number;
+  isImageBigger?: boolean;
 }
 
 function Component({
@@ -17,6 +18,7 @@ function Component({
   bookCoverImage,
   authorName,
   rating,
+  isImageBigger,
 }: DetailedCardProps): ReactNode {
   return (
     <div className="flex flex-col gap-3">
@@ -25,8 +27,8 @@ function Component({
           <Image
             src={bookCoverImage}
             alt="book image user"
-            width={64}
-            height={94}
+            width={isImageBigger ? 108 : 64}
+            height={isImageBigger ? 152 : 94}
           />
 
           <div className="flex flex-col justify-between gap-5">

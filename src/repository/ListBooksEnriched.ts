@@ -9,7 +9,7 @@ interface ListBooksEnrichedProps {
 }
 
 export default async function ListBooksEnriched({
-  pageSize = 20,
+  pageSize = 9999,
   page = 1,
   sortByRating = false,
 }: ListBooksEnrichedProps): Promise<EnrichedBook[]> {

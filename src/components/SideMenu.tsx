@@ -38,7 +38,7 @@ export function SideMenu({ children, session }: SideMenuProps): ReactNode {
                 </a>
 
                 <a
-                  href="/"
+                  href="/explore"
                   className="flex gap-3 text-gray-400 hover:text-gray-100 hover:font-bold"
                 >
                   <BiSolidBinoculars size={24} />
