@@ -1,12 +1,10 @@
 "use client";
 
+import { ReactNode } from "react";
+
 import { SWRConfig } from "swr";
 
-type Props = {
-  children?: React.ReactNode;
-};
-
-export const SWRProvider = ({ children }: Props) => {
+export const SWRProvider = ({ children }: { children: ReactNode }) => {
   return (
     <SWRConfig
       value={{

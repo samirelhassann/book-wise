@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable no-console */
 
 "use client";
@@ -11,15 +12,10 @@ import useSWR from "swr";
 import SmallCard from "@/components/SmallCard";
 import { EnrichedBook } from "@/models/PopularBooks";
 
-import { CategoryButton } from "./components/CategoryButton";
+import CategoryButton from "./components/CategoryButton";
 
 export default function Explore() {
-  const { data, isLoading, error } = useSWR("/api/list-enriched-books");
-
-  console.log(data);
-
-  console.log(isLoading);
-  console.log(error);
+  const { data, isLoading } = useSWR("/api/list-enriched-books");
 
   const allBooks = (data as EnrichedBook[]) ?? [];
 
@@ -47,6 +43,56 @@ export default function Explore() {
     setSearchQuery(event.target.value);
   };
 
+  const renderCategories = () => {
+    return (
+      <div className="flex flex-wrap gap-3">
+        {isLoading ? (
+          Array.from(new Array(5)).map((_, index) => (
+            <CategoryButton.Loading key={`loading-${index}`} />
+          ))
+        ) : (
+          <>
+            <CategoryButton.Component
+              title="All"
+              selected={selectedCategory === "All"}
+              onClick={() => setSelectedCategory("All")}
+            />
+
+            {allCategories.map((category) => (
+              <CategoryButton.Component
+                key={category}
+                title={category}
+                selected={selectedCategory === category}
+                onClick={() => setSelectedCategory(category)}
+              />
+            ))}
+          </>
+        )}
+      </div>
+    );
+  };
+
+  const renderBooks = () => {
+    return (
+      <div className="grid lg:grid-cols-2 xl:grid-cols-3 xxl:grid-cols-4 gap-3 max-h-[72vh] overflow-y-scroll no-scrollbar">
+        {isLoading
+          ? Array.from(new Array(5)).map((_, index) => (
+              <SmallCard.Loading key={`loading-${index}`} />
+            ))
+          : filteredBooks().map((book) => (
+              <SmallCard.Component
+                key={book.id}
+                bookName={book.title}
+                bookCoverImage={book.bookCoverImage}
+                authorName={book.author}
+                rating={book.averageRating}
+                isImageBigger
+              />
+            ))}
+      </div>
+    );
+  };
+
   return (
     <main className="flex flex-col gap-10 px-24 pt-20">
       <div className="flex justify-between">
@@ -70,35 +116,8 @@ export default function Explore() {
         </div>
       </div>
       <div className="flex flex-col gap-12">
-        <div className="flex flex-wrap gap-3">
-          <CategoryButton
-            title="All"
-            selected={selectedCategory === "All"}
-            onClick={() => setSelectedCategory("All")}
-          />
-
-          {allCategories.map((category) => (
-            <CategoryButton
-              key={category}
-              title={category}
-              selected={selectedCategory === category}
-              onClick={() => setSelectedCategory(category)}
-            />
-          ))}
-        </div>
-
-        <div className="grid lg:grid-cols-2 xl:grid-cols-3 xxl:grid-cols-4 gap-3 max-h-[72vh] overflow-y-scroll no-scrollbar">
-          {filteredBooks().map((book) => (
-            <SmallCard.Component
-              key={book.id}
-              bookName={book.title}
-              bookCoverImage={book.bookCoverImage}
-              authorName={book.author}
-              rating={book.averageRating}
-              isImageBigger
-            />
-          ))}
-        </div>
+        {renderCategories()}
+        {renderBooks()}
       </div>
     </main>
   );

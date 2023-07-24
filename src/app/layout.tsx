@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 import { Nunito_Sans } from "next/font/google";
 
+import { UserContextProvider } from "@/providers/contexts/UserContextProvider";
 import { NextAuthProvider } from "@/providers/NextAuthProvider";
 import { SideMenuProvider } from "@/providers/SideMenuProvider";
 import { SWRProvider } from "@/providers/SWRProvider";
@@ -22,9 +23,11 @@ export default function RootLayout({
     <html className="text-gray-100 bg-gray-800" lang="en">
       <body className={nunito.className}>
         <NextAuthProvider>
-          <SWRProvider>
-            <SideMenuProvider>{children}</SideMenuProvider>
-          </SWRProvider>
+          <UserContextProvider>
+            <SWRProvider>
+              <SideMenuProvider>{children}</SideMenuProvider>
+            </SWRProvider>
+          </UserContextProvider>
         </NextAuthProvider>
       </body>
     </html>
