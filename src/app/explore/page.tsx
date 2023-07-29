@@ -9,13 +9,14 @@ import { BsSearch } from "react-icons/bs";
 
 import useSWR from "swr";
 
+import { BookDetailsDrawer } from "@/components/BookDetailsDrawer";
 import SmallCard from "@/components/SmallCard";
 import { EnrichedBook } from "@/models/PopularBooks";
 
 import CategoryButton from "./components/CategoryButton";
 
 export default function Explore() {
-  const { data, isLoading } = useSWR("/api/list-enriched-books");
+  const { data, isLoading } = useSWR("/api/books/list");
 
   const allBooks = (data as EnrichedBook[]) ?? [];
 
@@ -95,6 +96,7 @@ export default function Explore() {
 
   return (
     <main className="flex flex-col gap-10 px-24 pt-20">
+      <BookDetailsDrawer />
       <div className="flex justify-between">
         <div className="flex items-center gap-3">
           <BiSolidBinoculars size={32} className="fill-green-100" />

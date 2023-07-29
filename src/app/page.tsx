@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+
 import { Suspense } from "react";
 import { MdOutlineStackedLineChart } from "react-icons/md";
 
