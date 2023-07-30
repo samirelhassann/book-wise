@@ -1,3 +1,4 @@
+/* eslint-disable unused-imports/no-unused-vars */
 /* eslint-disable no-console */
 
 import { Suspense } from "react";
@@ -5,16 +6,13 @@ import { MdOutlineStackedLineChart } from "react-icons/md";
 
 import { getServerSession } from "next-auth";
 
-import PopularBooks from "@/components/PopularBooks";
 import RecentRating from "@/components/RecentRating";
 import { authOptions } from "@/lib/auth/auth";
 
+import { HomeDetails } from "./components/HomeDetails";
+
 export default async function Home() {
   const session = await getServerSession(authOptions);
-
-  const isLogged = !!session;
-
-  console.log(isLogged);
 
   return (
     <main className="flex flex-col gap-10 px-24 pt-20">
@@ -25,15 +23,11 @@ export default async function Home() {
         </h1>
       </div>
 
-      <div className="flex gap-16 ">
+      <HomeDetails session={session}>
         <Suspense fallback={<RecentRating.Loading />}>
           <RecentRating.Component />
         </Suspense>
-
-        <Suspense fallback={<PopularBooks.Loading />}>
-          <PopularBooks.Component />
-        </Suspense>
-      </div>
+      </HomeDetails>
     </main>
   );
 }
