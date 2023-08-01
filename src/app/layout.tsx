@@ -1,7 +1,8 @@
 /* eslint-disable camelcase */
 import { Nunito_Sans } from "next/font/google";
 
-import { ProductDrawerProvider } from "@/providers/contexts/ProductDrawer";
+import { BookDetailsDrawer } from "@/components/BookDetailDrawer/BookDetailsDrawer";
+import { ProductDrawerProvider } from "@/providers/contexts/ProductDrawerContext";
 import { NextAuthProvider } from "@/providers/NextAuthProvider";
 import { SideMenuProvider } from "@/providers/SideMenuProvider";
 import { SWRProvider } from "@/providers/SWRProvider";
@@ -21,11 +22,15 @@ export default function RootLayout({
 }) {
   return (
     <html className="text-gray-100 bg-gray-800" lang="en">
-      <body className={nunito.className}>
+      <body className={`${nunito.className} overflow-y-hidden h-[100vh]`}>
         <NextAuthProvider>
           <ProductDrawerProvider>
             <SWRProvider>
-              <SideMenuProvider>{children}</SideMenuProvider>
+              <SideMenuProvider>
+                <BookDetailsDrawer />
+
+                {children}
+              </SideMenuProvider>
             </SWRProvider>
           </ProductDrawerProvider>
         </NextAuthProvider>

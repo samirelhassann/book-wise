@@ -42,7 +42,14 @@ function Loading() {
 }
 
 export default function Component() {
-  const { data, isLoading } = useSWR("/api/books/list");
+  const searchParams = [
+    ["pageSize", "5"],
+    ["sortByRating", "true"],
+  ];
+
+  const { data, isLoading } = useSWR(
+    `/api/books/list?${new URLSearchParams(searchParams).toString()}`
+  );
 
   const books = data as EnrichedBook[];
 
@@ -68,10 +75,11 @@ export default function Component() {
         </Link>
       </div>
 
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-3 h-[69vh] overflow-y-scroll no-scrollbar">
         {books?.map((book) => (
           <SmallCard.Component
             key={book.id}
+            bookId={book.id}
             bookName={book.title}
             bookCoverImage={book.bookCoverImage}
             authorName={book.author}

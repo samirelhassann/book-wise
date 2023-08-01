@@ -9,7 +9,6 @@ import { BsSearch } from "react-icons/bs";
 
 import useSWR from "swr";
 
-import { BookDetailsDrawer } from "@/components/BookDetailsDrawer";
 import SmallCard from "@/components/SmallCard";
 import { EnrichedBook } from "@/models/PopularBooks";
 
@@ -75,7 +74,7 @@ export default function Explore() {
 
   const renderBooks = () => {
     return (
-      <div className="grid lg:grid-cols-2 xl:grid-cols-3 xxl:grid-cols-4 gap-3 max-h-[72vh] overflow-y-scroll no-scrollbar">
+      <div className="grid lg:grid-cols-2 xl:grid-cols-3 xxl:grid-cols-4 gap-3 h-[65vh] no-scrollbar overflow-y-scroll no-scrollbar">
         {isLoading
           ? Array.from(new Array(5)).map((_, index) => (
               <SmallCard.Loading key={`loading-${index}`} />
@@ -83,6 +82,7 @@ export default function Explore() {
           : filteredBooks().map((book) => (
               <SmallCard.Component
                 key={book.id}
+                bookId={book.id}
                 bookName={book.title}
                 bookCoverImage={book.bookCoverImage}
                 authorName={book.author}
@@ -96,7 +96,6 @@ export default function Explore() {
 
   return (
     <main className="flex flex-col gap-10 px-24 pt-20">
-      <BookDetailsDrawer />
       <div className="flex justify-between">
         <div className="flex items-center gap-3">
           <BiSolidBinoculars size={32} className="fill-green-100" />
@@ -117,7 +116,7 @@ export default function Explore() {
           </span>
         </div>
       </div>
-      <div className="flex flex-col gap-12">
+      <div className="flex flex-col gap-5">
         {renderCategories()}
         {renderBooks()}
       </div>

@@ -12,6 +12,8 @@ export interface EnrichedBook {
 
 export interface Avaliation {
   userName: string;
+  userImage?: string | null;
   rating: number;
   comment: string;
+  date: Date;
 }

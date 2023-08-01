@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-shadow */
+
 "use client";
 
 import React, {
@@ -9,11 +11,12 @@ import React, {
 } from "react";
 
 interface ProductDrawerType {
-  toggle: () => void;
+  toggle: (bookId: string) => void;
   showDrawer: boolean;
+  bookId: string;
 }
 
-export const ProductDrawer = createContext({} as ProductDrawerType);
+export const ProductDrawerContext = createContext({} as ProductDrawerType);
 
 export function ProductDrawerProvider({
   children,
@@ -21,21 +24,25 @@ export function ProductDrawerProvider({
   children: ReactNode;
 }): ReactNode {
   const [showDrawer, setShowDrawer] = useState(false);
+  const [bookId, setBookId] = useState<string>("");
 
-  const toggle = useCallback(() => {
+  const toggle = useCallback((bookId: string) => {
     setShowDrawer((state) => !state);
+
+    setBookId(bookId);
   }, []);
 
   const contextReturn = useMemo(() => {
     return {
       toggle,
       showDrawer,
+      bookId,
     };
-  }, [showDrawer, toggle]);
+  }, [bookId, showDrawer, toggle]);
 
   return (
-    <ProductDrawer.Provider value={contextReturn}>
+    <ProductDrawerContext.Provider value={contextReturn}>
       {children}
-    </ProductDrawer.Provider>
+    </ProductDrawerContext.Provider>
   );
 }

@@ -1,11 +1,19 @@
-import React, { ReactNode } from "react";
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+
+"use client";
+
+import React, { ReactNode, useContext } from "react";
 
 import Image from "next/image";
+
+import { ProductDrawerContext } from "@/providers/contexts/ProductDrawerContext";
 
 import { Loader } from "./Loader";
 import { RatingStars } from "./RatingStars";
 
 interface DetailedCardProps {
+  bookId: string;
   bookName: string;
   bookCoverImage: string;
   authorName: string;
@@ -14,14 +22,24 @@ interface DetailedCardProps {
 }
 
 function Component({
+  bookId,
   bookName,
   bookCoverImage,
   authorName,
   rating,
   isImageBigger,
 }: DetailedCardProps): ReactNode {
+  const { toggle } = useContext(ProductDrawerContext);
+
+  const handleToggleDrawer = () => {
+    toggle(bookId);
+  };
+
   return (
-    <div className="flex flex-col gap-3">
+    <div
+      className="flex flex-col gap-3 cursor-pointer"
+      onClick={handleToggleDrawer}
+    >
       <div className="flex flex-col gap-8 p-6 bg-gray-700 rounded ">
         <div className="flex gap-6">
           <Image
@@ -48,7 +66,7 @@ function Component({
 function Loading() {
   return (
     <div className="flex flex-col gap-3">
-      <div className="flex flex-col gap-8 p-6 bg-gray-700 rounded ">
+      <div className="flex flex-col gap-8 p-6 bg-gray-700 rounded">
         <div className="flex gap-6">
           <Loader width="w-[64px]" height="h-[94px]" />
 

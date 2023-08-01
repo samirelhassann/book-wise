@@ -11,7 +11,7 @@ export function Loader({ height, width, rounded }: LoaderProps): ReactNode {
     <div
       className={`${height} ${width} ${
         rounded ?? "rounded-md"
-      } bg-gray-500 dark:bg-gray-700 animate-pulse`}
+      } bg-gray-500 dark:bg-gray-600 animate-pulse`}
     />
   );
 }

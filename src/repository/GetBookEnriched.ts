@@ -31,9 +31,11 @@ export default async function GetBookEnriched({
         select: {
           rate: true,
           description: true,
+          created_at: true,
           user: {
             select: {
               name: true,
+              avatar_url: true,
             },
           },
         },
@@ -54,6 +56,8 @@ export default async function GetBookEnriched({
       userName: rating.user.name,
       rating: rating.rate,
       comment: rating.description,
+      userImage: rating.user.avatar_url,
+      date: rating.created_at,
     };
   });
 
