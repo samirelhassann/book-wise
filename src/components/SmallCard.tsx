@@ -40,7 +40,7 @@ function Component({
       className="flex flex-col gap-3 cursor-pointer"
       onClick={handleToggleDrawer}
     >
-      <div className="flex flex-col gap-8 p-6 bg-gray-700 rounded ">
+      <div className="flex flex-col p-6 bg-gray-700 rounded gap ">
         <div className="flex gap-6">
           <Image
             src={bookCoverImage}

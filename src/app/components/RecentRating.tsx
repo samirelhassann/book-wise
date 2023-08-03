@@ -1,19 +1,18 @@
 import React from "react";
 
+import DetailedCard from "@/components/DetailedCard";
 import ListUserRatings from "@/repository/ListUserRatings";
-
-import DetailedCard from "./DetailedCard";
 
 async function Component() {
   const userRatings = await ListUserRatings();
 
   return (
-    <div className="flex flex-col w-2/3 gap-4">
+    <div className="flex flex-col gap-4">
       <span className="text-base leading-[160%] text-gray-100">
         Recent ratings
       </span>
 
-      <div className="flex flex-col gap-4 h-[69vh] overflow-y-scroll no-scrollbar">
+      <div className="flex flex-col gap-4">
         {userRatings.map((rating) => (
           <DetailedCard.Component
             key={`${rating.userName}-${rating.bookName}`}
@@ -34,7 +33,7 @@ async function Component() {
 
 function Loading() {
   return (
-    <div className="flex flex-col w-2/3 gap-4 overflow-y-scroll no-scrollbar">
+    <div className="flex flex-col gap-4 overflow-y-scroll no-scrollbar">
       <span className="text-base leading-[160%] text-gray-100">
         Recent ratings
       </span>

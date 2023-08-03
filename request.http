@@ -5,3 +5,8 @@ content-type: application/json
 GET http://localhost:3000/api/books/list?pageSize=5&sortByRating=true
 content-type: application/json
 
+
+###
+GET http://localhost:3000/api/users/75161fcc-102e-45f7-8800-83b7f383c830/read-books
+content-type: application/json
+

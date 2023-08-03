@@ -1,17 +1,17 @@
 "use client";
 
-import { useSession } from "next-auth/react";
+import { Session } from "next-auth";
 import { usePathname } from "next/navigation";
 
-import SideMenu from "@/components/SideMenu";
+import SideMenu from "@/components/SideMenu/SideMenu";
 
 type Props = {
-  children?: React.ReactNode;
+  children: React.ReactNode;
+  session: Session | null;
 };
 
-export const SideMenuProvider = ({ children }: Props) => {
+export const SideMenuProvider = ({ children, session }: Props) => {
   const pathName = usePathname();
-  const { data: session } = useSession();
 
   const excludedSideMenu = ["/login"].includes(pathName);
 
@@ -19,5 +19,11 @@ export const SideMenuProvider = ({ children }: Props) => {
     return children;
   }
 
-  return <SideMenu session={session}>{children}</SideMenu>;
+  return (
+    <div className="flex">
+      <SideMenu session={session} />
+
+      <div className="w-full">{children}</div>
+    </div>
+  );
 };

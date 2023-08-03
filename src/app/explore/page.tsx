@@ -10,7 +10,7 @@ import { BsSearch } from "react-icons/bs";
 import useSWR from "swr";
 
 import SmallCard from "@/components/SmallCard";
-import { EnrichedBook } from "@/models/PopularBooks";
+import { EnrichedBook } from "@/models/EnrichedBook";
 
 import CategoryButton from "./components/CategoryButton";
 
@@ -74,7 +74,7 @@ export default function Explore() {
 
   const renderBooks = () => {
     return (
-      <div className="grid lg:grid-cols-2 xl:grid-cols-3 xxl:grid-cols-4 gap-3 h-[65vh] no-scrollbar overflow-y-scroll no-scrollbar">
+      <div className="grid lg:grid-cols-2 xl:grid-cols-3 xxl:grid-cols-4 gap-3 max-h-[65vh] no-scrollbar overflow-y-scroll no-scrollbar">
         {isLoading
           ? Array.from(new Array(5)).map((_, index) => (
               <SmallCard.Loading key={`loading-${index}`} />

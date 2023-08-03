@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { EnrichedBook } from "@/models/PopularBooks";
+import { EnrichedBook } from "@/models/EnrichedBook";
 
 interface GetBookEnrichedProps {
   bookId: string;
@@ -36,6 +36,7 @@ export default async function GetBookEnriched({
             select: {
               name: true,
               avatar_url: true,
+              email: true,
             },
           },
         },
@@ -54,6 +55,7 @@ export default async function GetBookEnriched({
   const avaliations = book.ratings.map((rating) => {
     return {
       userName: rating.user.name,
+      userEmail: rating.user.email,
       rating: rating.rate,
       comment: rating.description,
       userImage: rating.user.avatar_url,

@@ -9,13 +9,13 @@ import Link from "next/link";
 
 import useSWR from "swr";
 
-import { EnrichedBook } from "@/models/PopularBooks";
+import { EnrichedBook } from "@/models/EnrichedBook";
 
 import SmallCard from "./SmallCard";
 
 function Loading() {
   return (
-    <div className="flex flex-col w-1/4 gap-4">
+    <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
         <span className="text-base leading-[160%] text-gray-100">
           Popular Books
@@ -58,7 +58,7 @@ export default function Component() {
   }
 
   return (
-    <div className="flex flex-col w-1/4 gap-4">
+    <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
         <span className="text-base leading-[160%] text-gray-100">
           Popular Books

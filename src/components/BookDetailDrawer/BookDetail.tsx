@@ -2,9 +2,11 @@
 
 import React, { ReactNode } from "react";
 
+import { useSession } from "next-auth/react";
+
 import useSWR from "swr";
 
-import { EnrichedBook } from "@/models/PopularBooks";
+import { Avaliation, EnrichedBook } from "@/models/EnrichedBook";
 
 import BookDetailCard from "./BookDetailCard";
 import UserRatingCard from "./UserRatingCard";
@@ -13,8 +15,12 @@ interface BookDetailProps {
   bookId: string;
 }
 
+type formatedAvaliation = Avaliation & { isUserRating: boolean };
+
 export function BookDetail({ bookId }: BookDetailProps): ReactNode {
   const { data, isLoading } = useSWR(`/api/books/${bookId}`);
+
+  const { data: session } = useSession();
 
   const book = data as EnrichedBook;
 
@@ -43,15 +49,26 @@ export function BookDetail({ bookId }: BookDetailProps): ReactNode {
 
     const { avaliations } = book;
 
-    return avaliations?.map((avaliation) => (
+    const formatedAvaliations: formatedAvaliation[] = avaliations
+      ?.map((av) => {
+        return {
+          ...av,
+          isUserRating: av.userEmail === session?.user?.email,
+        };
+      })
+      .sort((a) => (a.isUserRating ? -1 : 1));
+
+    return formatedAvaliations?.map((avaliation) => (
       <UserRatingCard.Component
         key={`${avaliation.comment}-${avaliation.userName}`}
         userImage={avaliation.userImage}
         userName={avaliation.userName}
-        date={avaliation.date}
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        date={new Date(avaliation.date!)}
         rating={avaliation.rating}
         ratingDescription={avaliation.comment}
         bookName={book.title}
+        isUserRating={avaliation.isUserRating}
       />
     ));
   };

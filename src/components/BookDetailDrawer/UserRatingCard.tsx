@@ -14,6 +14,7 @@ interface DetailedCardProps {
   date: Date;
   rating: number;
   ratingDescription: string;
+  isUserRating: boolean;
 }
 
 function Component({
@@ -23,6 +24,7 @@ function Component({
   rating,
   ratingDescription,
   bookName,
+  isUserRating,
 }: DetailedCardProps): ReactNode {
   const formatedDate = formatDistance(date, new Date(), {
     addSuffix: true,
@@ -30,7 +32,10 @@ function Component({
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="flex flex-col gap-8 p-6 bg-gray-700 rounded ">
+      <div
+        className="flex flex-col gap-8 p-6 bg-gray-700 rounded data-[user-rating=true]:bg-gray-600"
+        data-user-rating={isUserRating}
+      >
         <div className="flex justify-between">
           <div className="flex gap-4 ">
             {userImage && (

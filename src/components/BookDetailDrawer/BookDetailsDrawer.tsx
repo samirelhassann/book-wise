@@ -31,7 +31,7 @@ export function BookDetailsDrawer(): ReactNode {
           >
             <DialogPrimitive.Overlay
               forceMount
-              className="fixed inset-0 z-20 bg-black/50"
+              className="fixed inset-0 z-20 bg-black/60"
             />
           </Transition.Child>
           <Transition.Child
@@ -45,7 +45,7 @@ export function BookDetailsDrawer(): ReactNode {
           >
             <DialogPrimitive.Content
               forceMount
-              className="fixed dark:bg-gray-800 top-0 right-0 z-40 h-screen py-4 px-10 transition-transform bg-gray-700 w-[37%] flex flex-col overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-700 scrollbar-rounded-[20px]"
+              className="fixed top-0 right-0 z-40 h-screen py-4 px-10 transition-transform bg-gray-800 w-[37%] flex flex-col overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-700 scrollbar-rounded-[20px]"
             >
               <DialogPrimitive.Close className="self-end mb-4 focus:outline-none">
                 <RxCross1 className="text-gray-400" />

@@ -1,19 +1,26 @@
 import { prisma } from "@/lib/prisma";
 import { EnrichedBook } from "@/models/EnrichedBook";
 
-interface ListBooksEnrichedProps {
-  pageSize?: number;
-  page?: number;
-  category?: string;
-  sortByRating?: boolean;
+interface ListReadBookByUserProps {
+  userId: string;
 }
 
-export default async function ListBooksEnriched({
-  pageSize = 9999,
-  page = 1,
-  sortByRating = false,
-}: ListBooksEnrichedProps): Promise<EnrichedBook[]> {
-  const query = {
+export default async function ListReadBookByUser({
+  userId,
+}: ListReadBookByUserProps): Promise<EnrichedBook[]> {
+  const user = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+  });
+
+  if (!user) {
+    throw new Error("User not found", {
+      cause: "USER_NOT_FOUND",
+    });
+  }
+
+  const enrichedBooks = await prisma.book.findMany({
     select: {
       id: true,
       name: true,
@@ -42,11 +49,16 @@ export default async function ListBooksEnriched({
         },
       },
     },
-  };
+    where: {
+      ratings: {
+        some: {
+          user_id: userId,
+        },
+      },
+    },
+  });
 
-  const enrichedBooks = await prisma.book.findMany(query);
-
-  let enrichedBooksResult = enrichedBooks.map((book) => {
+  const enrichedBooksResult = enrichedBooks.map((book) => {
     const averageRating =
       book.ratings.reduce((sum, rating) => sum + rating.rate, 0) /
       book.ratings.length;
@@ -73,11 +85,5 @@ export default async function ListBooksEnriched({
     };
   });
 
-  if (sortByRating) {
-    enrichedBooksResult = enrichedBooksResult.sort(
-      (a, b) => b.averageRating - a.averageRating
-    );
-  }
-
-  return enrichedBooksResult.slice((page - 1) * pageSize, page * pageSize);
+  return enrichedBooksResult;
 }

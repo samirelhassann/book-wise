@@ -2,10 +2,13 @@ import { NextResponse } from "next/server";
 
 import GetBookEnriched from "@/repository/GetBookEnriched";
 
-export const GET = async (request: Request) => {
-  const id = request.url.slice(request.url.lastIndexOf("/") + 1);
+export const GET = async (
+  request: Request,
+  { params }: { params: { id: string } }
+) => {
+  const bookId = params.id;
 
-  return GetBookEnriched({ bookId: id })
+  return GetBookEnriched({ bookId })
     .then((response) => {
       if (response === null) {
         return NextResponse.json({ error: "Book not found" }, { status: 404 });
