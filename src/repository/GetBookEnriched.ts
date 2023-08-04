@@ -34,6 +34,7 @@ export default async function GetBookEnriched({
           created_at: true,
           user: {
             select: {
+              id: true,
               name: true,
               avatar_url: true,
               email: true,
@@ -54,6 +55,7 @@ export default async function GetBookEnriched({
 
   const avaliations = book.ratings.map((rating) => {
     return {
+      userId: rating.user.id,
       userName: rating.user.name,
       userEmail: rating.user.email,
       rating: rating.rate,

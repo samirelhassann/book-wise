@@ -10,6 +10,8 @@ import React, {
   useState,
 } from "react";
 
+import { BookDetailsDrawer } from "@/components/BookDetailDrawer/BookDetailsDrawer";
+
 interface ProductDrawerType {
   toggle: (bookId: string) => void;
   showDrawer: boolean;
@@ -42,6 +44,7 @@ export function ProductDrawerProvider({
 
   return (
     <ProductDrawerContext.Provider value={contextReturn}>
+      <BookDetailsDrawer />
       {children}
     </ProductDrawerContext.Provider>
   );

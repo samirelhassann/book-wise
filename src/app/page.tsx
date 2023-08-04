@@ -6,6 +6,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth/auth";
 
 import { HomeDetails } from "./components/HomeDetails";
+import LastReading from "./components/LastReading";
 import RecentRating from "./components/RecentRating";
 
 export default async function Home() {
@@ -22,9 +23,11 @@ export default async function Home() {
 
       <HomeDetails>
         <div className="flex flex-col gap-10">
-          <Suspense fallback={<RecentRating.Loading />}>
-            <RecentRating.Component />
-          </Suspense>
+          {!!session && (
+            <Suspense fallback={<LastReading.Loading />}>
+              <LastReading.Component userId={session?.user.id} />
+            </Suspense>
+          )}
 
           <Suspense fallback={<RecentRating.Loading />}>
             <RecentRating.Component />

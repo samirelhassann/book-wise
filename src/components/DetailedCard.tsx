@@ -8,7 +8,6 @@ import { Loader } from "./Loader";
 import { RatingStars } from "./RatingStars";
 
 interface DetailedCardProps {
-  userImage: string | null;
   userName: string;
   bookName: string;
   BookCoverImage: string;
@@ -16,6 +15,8 @@ interface DetailedCardProps {
   authorName: string;
   date: Date;
   rating: number;
+  userImage?: string | null;
+  isAuthor?: boolean;
 }
 
 function Component({
@@ -27,6 +28,7 @@ function Component({
   authorName,
   date,
   rating,
+  isAuthor = false,
 }: DetailedCardProps): ReactNode {
   const formatedDate = formatDistance(date, new Date(), {
     addSuffix: true,
@@ -34,7 +36,10 @@ function Component({
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="flex flex-col gap-8 p-6 bg-gray-700 rounded ">
+      <div
+        className="flex flex-col gap-8 p-6 bg-gray-700 rounded-lg data-[isUserRating=true]:bg-gray-600"
+        data-isUserRating={isAuthor}
+      >
         <div className="flex justify-between">
           <div className="flex gap-4 ">
             {userImage && (

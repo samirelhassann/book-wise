@@ -13,7 +13,7 @@ export default async function ListBooksEnriched({
   page = 1,
   sortByRating = false,
 }: ListBooksEnrichedProps): Promise<EnrichedBook[]> {
-  const query = {
+  const enrichedBooks = await prisma.book.findMany({
     select: {
       id: true,
       name: true,
@@ -35,6 +35,7 @@ export default async function ListBooksEnriched({
           description: true,
           user: {
             select: {
+              id: true,
               name: true,
               email: true,
             },
@@ -42,9 +43,7 @@ export default async function ListBooksEnriched({
         },
       },
     },
-  };
-
-  const enrichedBooks = await prisma.book.findMany(query);
+  });
 
   let enrichedBooksResult = enrichedBooks.map((book) => {
     const averageRating =
@@ -53,6 +52,7 @@ export default async function ListBooksEnriched({
 
     const avaliations = book.ratings.map((rating) => {
       return {
+        userId: rating.user.id,
         userName: rating.user.name,
         userEmail: rating.user.email,
         rating: rating.rate,

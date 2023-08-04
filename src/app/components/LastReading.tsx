@@ -1,11 +1,23 @@
 import React from "react";
 
-import ListUserRatings from "@/repository/ListUserRatings";
+import { EnrichedBook } from "@/models/EnrichedBook";
 
 import DetailedCard from "../../components/DetailedCard";
 
-async function Component() {
-  const userRatings = await ListUserRatings();
+interface LastReadingProps {
+  userId: string;
+}
+
+async function Component({ userId }: LastReadingProps) {
+  const request = await fetch(
+    `${process.env.API_HOST}/api/users/${userId}/read-books`
+  );
+
+  const userRatings = (await request.json()) as EnrichedBook[];
+
+  const bookInfos = userRatings?.find((rating) => rating);
+
+  const lastRating = bookInfos?.avaliations.find((av) => av);
 
   return (
     <div className="flex flex-col gap-4">
@@ -13,34 +25,30 @@ async function Component() {
         Your last reading
       </span>
 
-      <div className="flex flex-col gap-4 h-[69vh] overflow-y-scroll no-scrollbar">
-        {userRatings.map((rating) => (
-          <DetailedCard.Component
-            key={`${rating.userName}-${rating.bookName}`}
-            userImage={rating.userImage}
-            userName={rating.userName}
-            bookName={rating.bookName}
-            bookDescription={rating.bookDescription}
-            BookCoverImage={rating.bookCoverImage}
-            authorName={rating.authorName}
-            date={rating.date}
-            rating={rating.rating}
-          />
-        ))}
-      </div>
+      {lastRating && bookInfos && (
+        <DetailedCard.Component
+          userImage={lastRating.userImage}
+          userName={lastRating.userName}
+          bookName={bookInfos?.title}
+          bookDescription={lastRating.comment}
+          BookCoverImage={bookInfos.bookCoverImage}
+          authorName={bookInfos.author}
+          date={new Date(lastRating.date!)}
+          rating={lastRating.rating}
+          isAuthor
+        />
+      )}
     </div>
   );
 }
 
 function Loading() {
   return (
-    <div className="flex flex-col gap-4 overflow-y-scroll no-scrollbar">
+    <div className="flex flex-col gap-4">
       <span className="text-base leading-[160%] text-gray-100">
-        Recent ratings
+        Your last reading
       </span>
 
-      <DetailedCard.Loading />
-      <DetailedCard.Loading />
       <DetailedCard.Loading />
     </div>
   );

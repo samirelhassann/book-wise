@@ -3,13 +3,13 @@ import { getServerSession } from "next-auth/next";
 import { Nunito_Sans } from "next/font/google";
 
 import { authOptions } from "@/lib/auth/auth";
-import { BookDetailsDrawerProvider } from "@/providers/BookDetailsDrawerProvider";
 import { ProductDrawerProvider } from "@/providers/contexts/ProductDrawerContext";
 import { NextAuthProvider } from "@/providers/NextAuthProvider";
 import { SideMenuProvider } from "@/providers/SideMenuProvider";
 import { SWRProvider } from "@/providers/SWRProvider";
 
 import "./globals.css";
+import { LoginDialogProvider } from "@/providers/contexts/LoginDialogContext";
 
 const nunito = Nunito_Sans({ subsets: ["latin"] });
 
@@ -29,15 +29,15 @@ export default async function RootLayout({
     <html className="text-gray-100 bg-gray-800" lang="en">
       <body className={`${nunito.className} h-[100vh]`}>
         <NextAuthProvider>
-          <ProductDrawerProvider>
-            <SWRProvider>
-              <SideMenuProvider session={session}>
-                <BookDetailsDrawerProvider>
+          <SWRProvider>
+            <ProductDrawerProvider>
+              <LoginDialogProvider>
+                <SideMenuProvider session={session}>
                   {children}
-                </BookDetailsDrawerProvider>
-              </SideMenuProvider>
-            </SWRProvider>
-          </ProductDrawerProvider>
+                </SideMenuProvider>
+              </LoginDialogProvider>
+            </ProductDrawerProvider>
+          </SWRProvider>
         </NextAuthProvider>
       </body>
     </html>

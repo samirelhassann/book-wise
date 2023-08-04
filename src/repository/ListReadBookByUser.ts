@@ -37,13 +37,19 @@ export default async function ListReadBookByUser({
       },
       total_pages: true,
       ratings: {
+        where: {
+          user_id: userId,
+        },
         select: {
           rate: true,
           description: true,
+          created_at: true,
           user: {
             select: {
+              id: true,
               name: true,
               email: true,
+              avatar_url: true,
             },
           },
         },
@@ -58,32 +64,35 @@ export default async function ListReadBookByUser({
     },
   });
 
-  const enrichedBooksResult = enrichedBooks.map((book) => {
-    const averageRating =
-      book.ratings.reduce((sum, rating) => sum + rating.rate, 0) /
-      book.ratings.length;
+  return enrichedBooks
+    .map((book) => {
+      const averageRating =
+        book.ratings.reduce((sum, rating) => sum + rating.rate, 0) /
+        book.ratings.length;
 
-    const avaliations = book.ratings.map((rating) => {
+      const avaliations = book.ratings.map((rating) => {
+        return {
+          userId: rating.user.id,
+          userName: rating.user.name,
+          userEmail: rating.user.email,
+          userImage: rating.user.avatar_url,
+          rating: rating.rate,
+          comment: rating.description,
+          date: rating.created_at,
+        };
+      });
+
       return {
-        userName: rating.user.name,
-        userEmail: rating.user.email,
-        rating: rating.rate,
-        comment: rating.description,
+        id: book.id,
+        title: book.name,
+        author: book.author,
+        bookCoverImage: book.cover_url,
+        averageRating,
+        numberOfRatings: book.ratings.length,
+        categoryName: book.categories[0]?.category.name || "",
+        numberOfPages: book.total_pages,
+        avaliations,
       };
-    });
-
-    return {
-      id: book.id,
-      title: book.name,
-      author: book.author,
-      bookCoverImage: book.cover_url,
-      averageRating,
-      numberOfRatings: book.ratings.length,
-      categoryName: book.categories[0]?.category.name || "",
-      numberOfPages: book.total_pages,
-      avaliations,
-    };
-  });
-
-  return enrichedBooksResult;
+    })
+    .sort((a, b) => (a.avaliations[0]?.date < b.avaliations[0]?.date ? 1 : -1));
 }
