@@ -4,8 +4,8 @@ import Image from "next/image";
 
 import { formatDistance } from "date-fns";
 
-import { Loader } from "./Loader";
 import { RatingStars } from "./RatingStars";
+import { SkeletonLoader } from "./SkeletonLoader";
 
 interface DetailedCardProps {
   userName: string;
@@ -89,31 +89,35 @@ function Loading() {
       <div className="flex flex-col gap-8 p-6 bg-gray-700 rounded ">
         <div className="flex justify-between">
           <div className="flex gap-4 ">
-            <Loader height="h-[42px]" width="w-[42px]" rounded="rounded-full" />
+            <SkeletonLoader
+              height="h-[42px]"
+              width="w-[42px]"
+              rounded="rounded-full"
+            />
 
             <div className="flex flex-col gap-2">
-              <Loader height="h-[15px]" width="w-[200px]" />
+              <SkeletonLoader height="h-[15px]" width="w-[200px]" />
 
-              <Loader height="h-[12px]" width="w-[150px]" />
+              <SkeletonLoader height="h-[12px]" width="w-[150px]" />
             </div>
           </div>
 
-          <Loader height="h-[15px]" width="w-[100px]" />
+          <SkeletonLoader height="h-[15px]" width="w-[100px]" />
         </div>
 
         <div className="flex gap-6">
-          <Loader height="h-[152px]" width="w-[108px]" />
+          <SkeletonLoader height="h-[152px]" width="w-[108px]" />
 
           <div className="flex flex-col w-full gap-5">
             <div className="flex flex-col gap-2">
-              <Loader height="h-[15px]" width="w-[200px]" />
+              <SkeletonLoader height="h-[15px]" width="w-[200px]" />
 
-              <Loader height="h-[15px]" width="w-[150px]" />
+              <SkeletonLoader height="h-[15px]" width="w-[150px]" />
             </div>
 
-            <Loader height="h-[12px]" width="w-full" />
-            <Loader height="h-[12px]" width="w-2/3" />
-            <Loader height="h-[12px]" width="w-1/3" />
+            <SkeletonLoader height="h-[12px]" width="w-full" />
+            <SkeletonLoader height="h-[12px]" width="w-2/3" />
+            <SkeletonLoader height="h-[12px]" width="w-1/3" />
           </div>
         </div>
       </div>

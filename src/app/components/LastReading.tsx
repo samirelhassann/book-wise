@@ -9,14 +9,13 @@ interface LastReadingProps {
 }
 
 async function Component({ userId }: LastReadingProps) {
-  const request = await fetch(
-    `${process.env.API_HOST}/api/users/${userId}/read-books`
+  const data = await fetch(
+    `http://localhost:3000/api/users/${userId}/read-books`,
+    { next: { tags: ["infos"] } }
   );
 
-  const userRatings = (await request.json()) as EnrichedBook[];
-
+  const userRatings = (await data.json()) as EnrichedBook[];
   const bookInfos = userRatings?.find((rating) => rating);
-
   const lastRating = bookInfos?.avaliations.find((av) => av);
 
   return (

@@ -4,7 +4,6 @@ import { EnrichedBook } from "@/models/EnrichedBook";
 interface ListBooksEnrichedProps {
   pageSize?: number;
   page?: number;
-  category?: string;
   sortByRating?: boolean;
 }
 
@@ -47,8 +46,10 @@ export default async function ListBooksEnriched({
 
   let enrichedBooksResult = enrichedBooks.map((book) => {
     const averageRating =
-      book.ratings.reduce((sum, rating) => sum + rating.rate, 0) /
-      book.ratings.length;
+      book.ratings.length > 0
+        ? book.ratings.reduce((sum, rating) => sum + rating.rate, 0) /
+          book.ratings.length
+        : 0;
 
     const avaliations = book.ratings.map((rating) => {
       return {
@@ -74,8 +75,8 @@ export default async function ListBooksEnriched({
   });
 
   if (sortByRating) {
-    enrichedBooksResult = enrichedBooksResult.sort(
-      (a, b) => b.averageRating - a.averageRating
+    enrichedBooksResult = enrichedBooksResult.sort((a, b) =>
+      b.averageRating < a.averageRating ? -1 : 1
     );
   }
 

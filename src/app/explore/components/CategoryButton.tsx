@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 
-import { Loader } from "@/components/Loader";
+import { SkeletonLoader } from "@/components/SkeletonLoader";
 
 interface CategoryButtonProps {
   title: string;
@@ -28,7 +28,7 @@ function Component({
 }
 
 function Loading() {
-  return <Loader width="w-20" height="h-10" rounded="rounded-full" />;
+  return <SkeletonLoader width="w-20" height="h-10" rounded="rounded-full" />;
 }
 
 export default { Component, Loading };

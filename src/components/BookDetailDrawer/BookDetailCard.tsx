@@ -3,8 +3,8 @@ import { BsBook, BsBookmark } from "react-icons/bs";
 
 import Image from "next/image";
 
-import { Loader } from "../Loader";
 import { RatingStars } from "../RatingStars";
+import { SkeletonLoader } from "../SkeletonLoader";
 
 interface BookDetailProps {
   image: string;
@@ -83,17 +83,17 @@ function Loading(): ReactNode {
   return (
     <div className="flex flex-col gap-10 px-8 py-4 bg-gray-700 rounded-md">
       <div className="flex gap-8">
-        <Loader width="w-[160px]" height="h-[240px]" />
+        <SkeletonLoader width="w-[160px]" height="h-[240px]" />
 
         <div className="flex flex-col justify-between">
           <div className="flex flex-col gap-2">
-            <Loader width="w-[150px]" height="h-[17px]" />
-            <Loader width="w-[90px]" height="h-[15px]" />
+            <SkeletonLoader width="w-[150px]" height="h-[17px]" />
+            <SkeletonLoader width="w-[90px]" height="h-[15px]" />
           </div>
 
           <div className="flex flex-col gap-1">
-            <Loader width="w-[100px]" height="h-[15px]" />
-            <Loader width="w-[70px]" height="h-[15px]" />
+            <SkeletonLoader width="w-[100px]" height="h-[15px]" />
+            <SkeletonLoader width="w-[70px]" height="h-[15px]" />
           </div>
         </div>
       </div>
@@ -103,7 +103,7 @@ function Loading(): ReactNode {
           <BsBookmark size={24} className="text-green-100" />
           <div className="flex flex-col">
             <span className="text-sm leading-6 text-gray-300">Category</span>
-            <Loader width="w-[70px]" height="h-[15px]" />
+            <SkeletonLoader width="w-[70px]" height="h-[15px]" />
           </div>
         </div>
 
@@ -111,7 +111,7 @@ function Loading(): ReactNode {
           <BsBook size={24} className="text-green-100" />
           <div className="flex flex-col">
             <span className="text-sm leading-6 text-gray-300">Pages</span>
-            <Loader width="w-[70px]" height="h-[15px]" />
+            <SkeletonLoader width="w-[70px]" height="h-[15px]" />
           </div>
         </div>
       </div>

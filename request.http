@@ -10,3 +10,15 @@ content-type: application/json
 GET http://localhost:3000/api/users/75165fcc-102e-45f7-8800-83b7f383c830/read-books
 content-type: application/json
 
+###
+POST http://localhost:3000/api/books/rate
+content-type: application/json
+
+{
+    "bookId": "123",
+    "userId": "123",
+    "rate": 1,
+    "description": "nice book"
+}
+
+

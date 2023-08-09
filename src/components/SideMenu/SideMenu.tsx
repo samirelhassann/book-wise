@@ -45,7 +45,7 @@ export function SideMenu({ session }: SideMenuProps) {
 
               {isLogged && (
                 <a
-                  href="/"
+                  href="/profile"
                   className="flex gap-3 text-gray-400 hover:text-gray-100"
                 >
                   <BsPerson size={24} />
@@ -58,7 +58,7 @@ export function SideMenu({ session }: SideMenuProps) {
 
         <LoggedUserInfo
           isLogged={isLogged}
-          userImage={session?.user?.image}
+          userImage={session?.user?.avatar_url}
           userName={session?.user?.name}
         />
       </div>

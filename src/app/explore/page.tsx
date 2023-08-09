@@ -5,10 +5,10 @@
 
 import { useState } from "react";
 import { BiSolidBinoculars } from "react-icons/bi";
-import { BsSearch } from "react-icons/bs";
 
 import useSWR from "swr";
 
+import { Search } from "@/components/Search";
 import SmallCard from "@/components/SmallCard";
 import { EnrichedBook } from "@/models/EnrichedBook";
 
@@ -37,10 +37,6 @@ export default function Explore() {
     );
 
     return filtered;
-  };
-
-  const handleChangeSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(event.target.value);
   };
 
   const renderCategories = () => {
@@ -104,17 +100,7 @@ export default function Explore() {
           </h1>
         </div>
 
-        <div className="relative text-gray-600 focus-within:text-gray-400">
-          <input
-            name="q"
-            className="w-[433px] h-12 rounded bg-gray-800 border-2 border-gray-500 pl-5 pr-10 py-3 text-gray-400 outline-none caret-gray-400"
-            onChange={handleChangeSearch}
-          />
-
-          <span className="absolute inset-y-0 right-0 flex items-center pr-5">
-            <BsSearch size={20} className="fill-gray-500" />
-          </span>
-        </div>
+        <Search onChangeSearch={setSearchQuery} className="w-[433px] h-12" />
       </div>
       <div className="flex flex-col gap-5">
         {renderCategories()}

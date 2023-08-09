@@ -21,6 +21,10 @@ export default async function ListUserRatings(): Promise<UserRatings[]> {
         },
       },
     },
+    orderBy: {
+      created_at: "desc",
+    },
+    take: 20,
   });
 
   const userRatings = usersWithRatings

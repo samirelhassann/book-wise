@@ -3,14 +3,13 @@
 import React, { ReactNode } from "react";
 
 import { useSession } from "next-auth/react";
-import Image from "next/image";
 
 import useSWR from "swr";
 
 import { Avaliation, EnrichedBook } from "@/models/EnrichedBook";
 
-import { RatingStars } from "../RatingStars";
 import BookDetailCard from "./BookDetailCard";
+import { InteractiveUserRating } from "./InteractiveUserRating";
 import UserRatingCard from "./UserRatingCard";
 
 interface BookDetailProps {
@@ -19,19 +18,62 @@ interface BookDetailProps {
 
 type formatedAvaliation = Avaliation & { isUserRating: boolean };
 
+function Loading(): ReactNode {
+  return (
+    <div className="flex flex-col gap-10">
+      <BookDetailCard.Loading />
+
+      <div className="flex flex-col gap-5">
+        <div className="flex justify-between item-center">
+          <span className="text-sm leading-6 text-gray-200">Ratings</span>
+          <button type="button" className="font-bold leading-6 text-purple-100">
+            Rate
+          </button>
+        </div>
+
+        <div className="flex flex-col gap-3">
+          <UserRatingCard.Loading />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ErrorHandling(): ReactNode {
+  return (
+    <div className="flex flex-col items-center justify-center h-full gap-10">
+      <span className="text-lg text-gray-300">
+        Error to find the book details ...
+      </span>
+    </div>
+  );
+}
+
 export function BookDetail({ bookId }: BookDetailProps): ReactNode {
-  const { data, isLoading } = useSWR(`/api/books/${bookId}`);
-  const book = data as EnrichedBook;
+  const {
+    data: book,
+    isLoading,
+    error,
+    mutate,
+  } = useSWR<EnrichedBook>(`/api/books/${bookId}`);
 
   const { data: session } = useSession();
   const isUserLogged = !!session;
   const userId = session?.user?.id;
 
-  const renderBookDetailCard = () => {
-    if (isLoading) {
-      return <BookDetailCard.Loading />;
-    }
+  if (isLoading) {
+    return <Loading />;
+  }
 
+  if (error || !book) {
+    return <ErrorHandling />;
+  }
+
+  const handleMutate = () => {
+    mutate();
+  };
+
+  const renderBookDetailCard = () => {
     return (
       <BookDetailCard.Component
         image={book.bookCoverImage}
@@ -46,10 +88,6 @@ export function BookDetail({ bookId }: BookDetailProps): ReactNode {
   };
 
   const renderComments = () => {
-    if (isLoading) {
-      return <UserRatingCard.Loading />;
-    }
-
     const { avaliations } = book;
 
     const formatedAvaliations: formatedAvaliation[] = avaliations
@@ -67,29 +105,13 @@ export function BookDetail({ bookId }: BookDetailProps): ReactNode {
     return (
       <>
         {shouldRequestUserToRate && (
-          <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-8 p-6 bg-gray-700 rounded">
-              <div className="flex justify-between">
-                <div className="flex gap-4 ">
-                  {session.user.avatar_url && (
-                    <Image
-                      className="max-w-sm p-[1px] rounded-full bg-gray800 bg-gradient-to-b from-green-100 to-purple-100"
-                      src={session.user.avatar_url}
-                      alt="rating image user"
-                      width={42}
-                      height={42}
-                    />
-                  )}
-
-                  <div className="flex flex-col">
-                    <span>{session.user.name}</span>
-                  </div>
-                </div>
-
-                <RatingStars rating={1} bookName="test" />
-              </div>
-            </div>
-          </div>
+          <InteractiveUserRating
+            bookId={bookId}
+            userId={session?.user.id}
+            userImage={session?.user?.avatar_url}
+            userName={session?.user?.name}
+            onChangeRating={handleMutate}
+          />
         )}
         {formatedAvaliations?.map((avaliation) => (
           <UserRatingCard.Component

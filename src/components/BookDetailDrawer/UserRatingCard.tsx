@@ -4,8 +4,8 @@ import Image from "next/image";
 
 import { formatDistance } from "date-fns";
 
-import { Loader } from "../Loader";
 import { RatingStars } from "../RatingStars";
+import { SkeletonLoader } from "../SkeletonLoader";
 
 interface DetailedCardProps {
   userImage?: string | null;
@@ -69,18 +69,18 @@ function Loading(): ReactNode {
       <div className="flex flex-col gap-8 p-6 bg-gray-700 rounded ">
         <div className="flex justify-between">
           <div className="flex gap-4 ">
-            <Loader width="w-[42px]" height="h-[42px]" />
+            <SkeletonLoader width="w-[42px]" height="h-[42px]" />
 
             <div className="flex flex-col">
-              <Loader width="w-[100px]" height="h-[15px]" />
-              <Loader width="w-[70px]" height="h-[15px]" />
+              <SkeletonLoader width="w-[100px]" height="h-[15px]" />
+              <SkeletonLoader width="w-[70px]" height="h-[15px]" />
             </div>
           </div>
-          <Loader width="w-[100px]" height="h-[15px]" />
+          <SkeletonLoader width="w-[100px]" height="h-[15px]" />
         </div>
 
-        <Loader width="w-2/3" height="h-[15px]" />
-        <Loader width="w-1/3" height="h-[15px]" />
+        <SkeletonLoader width="w-2/3" height="h-[15px]" />
+        <SkeletonLoader width="w-1/3" height="h-[15px]" />
       </div>
     </div>
   );

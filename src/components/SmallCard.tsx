@@ -9,8 +9,8 @@ import Image from "next/image";
 
 import { ProductDrawerContext } from "@/providers/contexts/ProductDrawerContext";
 
-import { Loader } from "./Loader";
 import { RatingStars } from "./RatingStars";
+import { SkeletonLoader } from "./SkeletonLoader";
 
 interface DetailedCardProps {
   bookId: string;
@@ -68,14 +68,14 @@ function Loading() {
     <div className="flex flex-col gap-3">
       <div className="flex flex-col gap-8 p-6 bg-gray-700 rounded">
         <div className="flex gap-6">
-          <Loader width="w-[64px]" height="h-[94px]" />
+          <SkeletonLoader width="w-[64px]" height="h-[94px]" />
 
           <div className="flex flex-col justify-between gap-5">
             <div className="flex flex-col gap-3">
-              <Loader width="w-[150px]" height="h-[17px]" />
-              <Loader width="w-[100px]" height="h-[15px]" />
+              <SkeletonLoader width="w-[150px]" height="h-[17px]" />
+              <SkeletonLoader width="w-[100px]" height="h-[15px]" />
             </div>
-            <Loader width="w-[70px]" height="h-[15px]" />
+            <SkeletonLoader width="w-[70px]" height="h-[15px]" />
           </div>
         </div>
       </div>

@@ -29,6 +29,7 @@ export const authOptions: NextAuthOptions = {
     session: async ({ session, user }: SessionProps) => {
       if (session?.user) {
         session.user.id = user.id;
+        session.user.avatar_url = user.avatar_url;
       }
       return session;
     },

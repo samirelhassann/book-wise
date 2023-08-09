@@ -1,12 +1,16 @@
 import React, { ReactNode } from "react";
 
-interface LoaderProps {
+interface SkeletonLoaderProps {
   height: string;
   width: string;
   rounded?: string;
 }
 
-export function Loader({ height, width, rounded }: LoaderProps): ReactNode {
+export function SkeletonLoader({
+  height,
+  width,
+  rounded,
+}: SkeletonLoaderProps): ReactNode {
   return (
     <div
       className={`${height} ${width} ${
