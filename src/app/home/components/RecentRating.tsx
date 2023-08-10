@@ -1,10 +1,11 @@
 import React from "react";
 
-import DetailedCard from "@/components/DetailedCard";
-import ListUserRatings from "@/repository/ListUserRatings";
+import ListAllUserRatings from "@/repository/ListAllUserRatings";
+
+import DetailedCard from "./DetailedCard";
 
 async function Component() {
-  const userRatings = await ListUserRatings();
+  const userRatings = await ListAllUserRatings();
 
   return (
     <div className="flex flex-col gap-4">

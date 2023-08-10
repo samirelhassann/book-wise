@@ -3,13 +3,13 @@ import { getServerSession } from "next-auth/next";
 import { Nunito_Sans } from "next/font/google";
 
 import { authOptions } from "@/lib/auth/auth";
+import { LoginDialogProvider } from "@/providers/contexts/LoginDialogContext";
 import { ProductDrawerProvider } from "@/providers/contexts/ProductDrawerContext";
 import { NextAuthProvider } from "@/providers/NextAuthProvider";
 import { SideMenuProvider } from "@/providers/SideMenuProvider";
 import { SWRProvider } from "@/providers/SWRProvider";
 
 import "./globals.css";
-import { LoginDialogProvider } from "@/providers/contexts/LoginDialogContext";
 
 const nunito = Nunito_Sans({ subsets: ["latin"] });
 

@@ -11,7 +11,7 @@ import useSWR from "swr";
 
 import { EnrichedBook } from "@/models/EnrichedBook";
 
-import SmallCard from "./SmallCard";
+import SmallCard from "../../../components/SmallCard";
 
 function Loading() {
   return (

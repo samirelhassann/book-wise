@@ -1,15 +1,21 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Suspense } from "react";
 import { BiUser } from "react-icons/bi";
 
 import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 
 import { authOptions } from "@/lib/auth/auth";
 
-import LastReading from "../components/LastReading";
-import RecentRating from "../components/RecentRating";
+import ListBooksGroupedByDate from "./components/ListBooksGroupedByDate";
+import { UserSummary } from "./components/UserSummary";
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
+
+  if (!session) {
+    redirect("/");
+  }
 
   return (
     <main className="flex flex-col gap-10 px-24 pt-20 h-[calc(100vh-100px)]">
@@ -21,19 +27,18 @@ export default async function Home() {
       </div>
 
       <div className="flex h-full gap-16">
-        <div className="w-3/4 overflow-y-scroll no-scrollbar">
-          {!!session && (
-            <Suspense fallback={<LastReading.Loading />}>
-              <LastReading.Component userId={session?.user.id} />
-            </Suspense>
-          )}
-          <Suspense fallback={<RecentRating.Loading />}>
-            <RecentRating.Component />
+        <div className="w-4/6 overflow-y-scroll no-scrollbar">
+          <Suspense fallback={<ListBooksGroupedByDate.Loading />}>
+            <ListBooksGroupedByDate.Component userId={session.user.id} />
           </Suspense>
         </div>
 
-        <div className="w-1/4">
-          <span>Profile card</span>
+        <div className="w-2/6">
+          <UserSummary
+            userId={session.user.id}
+            userImage={session.user.avatar_url}
+            userName={session.user.name}
+          />
         </div>
       </div>
     </main>

@@ -2,7 +2,7 @@ import React from "react";
 
 import { EnrichedBook } from "@/models/EnrichedBook";
 
-import DetailedCard from "../../components/DetailedCard";
+import DetailedCard from "./DetailedCard";
 
 interface LastReadingProps {
   userId: string;

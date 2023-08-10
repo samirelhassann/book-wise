@@ -1,9 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { UserRatings } from "@/models/UserRatings";
 
-export default async function ListUserRatings(
-  userId: string
-): Promise<UserRatings[]> {
+export default async function ListAllUserRatings(): Promise<UserRatings[]> {
   const usersWithRatings = await prisma.user.findMany({
     select: {
       name: true,
@@ -24,12 +22,10 @@ export default async function ListUserRatings(
         },
       },
     },
-    where: {
-      id: userId,
-    },
     orderBy: {
       created_at: "desc",
     },
+    take: 20,
   });
 
   const userRatings = usersWithRatings

@@ -5,9 +5,10 @@ import { BsCheck2 } from "react-icons/bs";
 import { RxCross1 } from "react-icons/rx";
 
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
-import { InteractiveRatingStars } from "../InteractiveRatingStars";
 import { LoadingSpinner } from "../LoadingSpinner";
+import { InteractiveRatingStars } from "./InteractiveRatingStars";
 
 interface InteractiveUserRatingProps {
   userImage?: string;
@@ -19,17 +20,23 @@ interface InteractiveUserRatingProps {
 
 const MAX_INPUT_LIMIT = 450;
 
-const sendRating = async (data) => {
+const sendRating = async (
+  bookId: string,
+  userId: string,
+  ratingStar: number,
+  comment: string
+) => {
   await fetch("/api/books/rate", {
     method: "POST",
     headers: {
       "Content-type": "application/json",
     },
-    body: JSON.stringify(data),
-  });
-
-  await fetch("/api/revalidate?tag=infos", {
-    method: "POST",
+    body: JSON.stringify({
+      bookId,
+      userId,
+      rate: ratingStar,
+      description: comment,
+    }),
   });
 };
 
@@ -43,6 +50,8 @@ export function InteractiveUserRating({
   const [comment, setComment] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [ratingStar, setRatingStar] = useState(0);
+
+  const router = useRouter();
 
   const formatedInputCharsCounter = `${comment.length}/${MAX_INPUT_LIMIT}`;
   const isButtonSubmitDisabled = comment.length === 0 || ratingStar === 0;
@@ -60,26 +69,13 @@ export function InteractiveUserRating({
   const handleSendRating = async () => {
     setIsLoading(true);
 
-    fetch("/api/books/rate", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify({
-        bookId,
-        userId,
-        rate: ratingStar,
-        description: comment,
-      }),
-    }).finally(async () => {
-      onChangeRating();
+    await sendRating(bookId, userId, ratingStar, comment);
 
-      await fetch("/api/revalidate?tag=infos", {
-        method: "POST",
-      });
+    onChangeRating();
 
-      setIsLoading(false);
-    });
+    router.refresh();
+
+    setIsLoading(false);
   };
 
   return (

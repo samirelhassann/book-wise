@@ -7,4 +7,5 @@ export interface UserRatings {
   authorName: string;
   date: Date;
   rating: number;
+  comment: string;
 }

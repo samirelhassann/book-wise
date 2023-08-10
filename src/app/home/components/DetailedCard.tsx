@@ -4,8 +4,8 @@ import Image from "next/image";
 
 import { formatDistance } from "date-fns";
 
-import { RatingStars } from "./RatingStars";
-import { SkeletonLoader } from "./SkeletonLoader";
+import { RatingStars } from "../../../components/RatingStars";
+import { SkeletonLoader } from "../../../components/SkeletonLoader";
 
 interface DetailedCardProps {
   userName: string;

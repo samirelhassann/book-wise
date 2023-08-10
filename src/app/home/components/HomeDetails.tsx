@@ -2,7 +2,7 @@
 
 import React, { ReactNode } from "react";
 
-import PopularBooks from "@/components/PopularBooks";
+import PopularBooks from "./PopularBooks";
 
 interface HomeDetailsProps {
   children: ReactNode;
