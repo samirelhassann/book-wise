@@ -21,14 +21,26 @@ An application for book evaluations using ReactJs + NextJS 13.4 + Tailwind
 
 ![Evidence](https://github.com/samirelhassann/book-wise/assets/91634008/3d4f0a79-4cae-4b68-9b2e-3fa31f684c97)
 
-## Installation
+## Usage
 
+1. Install the dependencies
 ```bash
 yarn install
 ```
 
-## Usage
+2. Duplicate the .env.example file and fill with the correct values
 
+3. Run docker compose to create the postgresql docker container
+```bash
+docker compose up -d
+```
+
+4. Populate the database to initial default values
+```bash
+yarn prisma db seed
+```
+
+5. Run the application
 ```bash
 yarn dev
 ```
