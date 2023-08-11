@@ -1,13 +1,12 @@
 "use client";
 
-import React, { ReactNode, useContext } from "react";
+import React, { ReactNode } from "react";
 
 import { useSession } from "next-auth/react";
 
 import useSWR from "swr";
 
 import { Avaliation, EnrichedBook } from "@/models/EnrichedBook";
-import { LoginDialogContext } from "@/providers/contexts/LoginDialogContext";
 
 import BookDetailCard from "./BookDetailCard";
 import { InteractiveUserRating } from "./InteractiveUserRating";
@@ -59,7 +58,6 @@ export function BookDetail({ bookId }: BookDetailProps): ReactNode {
   } = useSWR<EnrichedBook>(`/api/books/${bookId}`);
 
   const { data: session } = useSession();
-  const { toggle: toggleShowLoginDialog } = useContext(LoginDialogContext);
 
   const isUserLogged = !!session;
   const userId = session?.user?.id;
@@ -140,13 +138,6 @@ export function BookDetail({ bookId }: BookDetailProps): ReactNode {
       <div className="flex flex-col gap-5">
         <div className="flex justify-between item-center">
           <span className="text-sm leading-6 text-gray-200">Ratings</span>
-          <button
-            type="button"
-            className="font-bold leading-6 text-purple-100"
-            onClick={toggleShowLoginDialog}
-          >
-            Rate
-          </button>
         </div>
 
         <div className="flex flex-col gap-3">{renderComments()}</div>

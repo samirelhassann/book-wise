@@ -15,7 +15,7 @@ import SmallCard from "../../../components/SmallCard";
 
 function Loading() {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col h-full gap-4">
       <div className="flex items-center justify-between">
         <span className="text-base leading-[160%] text-gray-100">
           Popular Books
@@ -32,7 +32,7 @@ function Loading() {
         </Link>
       </div>
 
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-3 overflow-y-scroll no-scrollbar">
         {Array.from({ length: 5 }).map((_, i) => (
           <SmallCard.Loading key={i} />
         ))}
@@ -58,7 +58,7 @@ export default function Component() {
   }
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col h-full gap-4">
       <div className="flex items-center justify-between">
         <span className="text-base leading-[160%] text-gray-100">
           Popular Books
@@ -75,7 +75,7 @@ export default function Component() {
         </Link>
       </div>
 
-      <div className="flex flex-col gap-3 h-[69vh] overflow-y-scroll no-scrollbar">
+      <div className="flex flex-col gap-3 overflow-y-scroll no-scrollbar">
         {books?.map((book) => (
           <SmallCard.Component
             key={book.id}

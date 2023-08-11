@@ -18,7 +18,7 @@ export function SideMenu({ session }: SideMenuProps) {
   const isLogged = !!session;
 
   return (
-    <div className="h-[calc(100vh-40px)] my-5 ml-5 px-12 rounded-2xl border-solid border-black border-[1px] bg-gradient-to-t from-green-300 to-gray-700">
+    <div className="h-[calc(100vh-40px)] my-5 ml-5 px-12 rounded-2xl border-solid bg-gradient-to-t from-green-300 to-gray-700">
       <div className="flex flex-col items-center justify-between h-full py-6 pt-10">
         <div className="flex flex-col gap-20">
           <div className="relative w-32 h-8">

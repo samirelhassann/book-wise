@@ -70,7 +70,7 @@ export default function Explore() {
 
   const renderBooks = () => {
     return (
-      <div className="grid lg:grid-cols-2 xl:grid-cols-3 xxl:grid-cols-4 gap-3 max-h-[65vh] no-scrollbar overflow-y-scroll no-scrollbar">
+      <div className="grid gap-3 overflow-y-scroll lg:grid-cols-2 xl:grid-cols-3 xxl:grid-cols-4 no-scrollbar">
         {isLoading
           ? Array.from(new Array(5)).map((_, index) => (
               <SmallCard.Loading key={`loading-${index}`} />
@@ -102,7 +102,7 @@ export default function Explore() {
 
         <Search onChangeSearch={setSearchQuery} className="w-[433px] h-12" />
       </div>
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-5 h-[calc(100vh-200px)]">
         {renderCategories()}
         {renderBooks()}
       </div>
